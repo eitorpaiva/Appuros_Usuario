@@ -46,6 +46,7 @@ public class EsperandoActivity extends AppCompatActivity {
         SpannableString s = new SpannableString(title);
         s.setSpan(new ForegroundColorSpan(Color.parseColor(extras.getString("cor"))), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         getSupportActionBar().setTitle(s);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_esperando);
 
