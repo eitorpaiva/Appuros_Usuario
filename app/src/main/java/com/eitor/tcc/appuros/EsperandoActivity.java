@@ -74,7 +74,12 @@ public class EsperandoActivity extends AppCompatActivity {
                 df.update("servico", FieldValue.delete()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        startActivity(new Intent(EsperandoActivity.this, ChamadasActivity.class));
+                        df.update("gps", FieldValue.delete()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                startActivity(new Intent(EsperandoActivity.this, ChamadasActivity.class));
+                            }
+                        });
                     }
                 });
             }

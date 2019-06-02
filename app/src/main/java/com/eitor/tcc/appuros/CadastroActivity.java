@@ -53,6 +53,15 @@ public class CadastroActivity extends AppCompatActivity {
         _resmed = findViewById(R.id.resmed);
         _telefone = findViewById(R.id.telefone);
 
+        if (!getIntent().getExtras().isEmpty() && getIntent().getExtras() != null) {
+            _nome.setText(getIntent().getStringExtra("nome"));
+            _cpf.setText(getIntent().getStringExtra("cpf"));
+            _endereco.setText(getIntent().getStringExtra("endereco"));
+            _contatoEmergencia.setText(getIntent().getStringExtra("contatoEmergencia"));
+            _resmed.setText(getIntent().getStringExtra("restricoesMedicas"));
+            _telefone.setText(getIntent().getStringExtra("telefone"));
+        }
+
         final Spinner tipoSanguineo = findViewById(R.id.spinnerSangues);
 
         tipoSanguineo.setAdapter(a);
@@ -68,7 +77,7 @@ public class CadastroActivity extends AppCompatActivity {
                 GoogleSignInAccount conta = GoogleSignIn.getLastSignedInAccount(CadastroActivity.this);
                 assert conta != null;
                 String
-                        nome = conta.getDisplayName(),
+                        nome = _nome.getEditableText().toString(),
                         cpf = _cpf.getEditableText().toString(),
                         endereco = _endereco.getEditableText().toString(),
                         telefone = _telefone.getEditableText().toString(),
@@ -124,6 +133,4 @@ public class CadastroActivity extends AppCompatActivity {
 
         });
     }
-    
-
 }

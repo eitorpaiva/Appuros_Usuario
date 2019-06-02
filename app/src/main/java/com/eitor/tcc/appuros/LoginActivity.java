@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -68,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
 
         if (GoogleSignIn.getLastSignedInAccount(this) == null) {
-            SignInButton login = findViewById(R.id.sign_in);
+            Button login = findViewById(R.id.sign_in);
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
