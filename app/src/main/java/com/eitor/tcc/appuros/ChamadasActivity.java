@@ -54,9 +54,14 @@ public class ChamadasActivity extends AppCompatActivity implements OnMapReadyCal
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         // fetchLastLocation();
 
-        TextView frufru = findViewById(R.id.usuario);
+        final TextView frufru = findViewById(R.id.usuario);
 
-        frufru.setText("Usuário: " + GoogleSignIn.getLastSignedInAccount(this).getGivenName());
+        db.collection("usuarios").document(email.substring(0, email.indexOf("@"))).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                frufru.setText("Usuário: " + documentSnapshot.get("nome").toString().split(" ")[0]);
+            }
+        });
 
         frufru.setOnClickListener(new View.OnClickListener() {
             @Override

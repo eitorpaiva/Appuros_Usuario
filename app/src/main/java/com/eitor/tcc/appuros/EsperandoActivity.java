@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -38,6 +39,7 @@ public class EsperandoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        db = FirebaseFirestore.getInstance();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().setElevation(0);
@@ -53,9 +55,18 @@ public class EsperandoActivity extends AppCompatActivity {
         View linha = (View) findViewById(R.id.linha);
         linha.setBackgroundColor(Color.parseColor(extras.getString("cor")));
 
-        TextView usuario = (TextView) findViewById(R.id.usuario);
+        String email = GoogleSignIn.getLastSignedInAccount(this).getEmail();
+
+        final TextView usuario = (TextView) findViewById(R.id.usuario);
         usuario.setTextColor(Color.parseColor(extras.getString("cor")));
-        usuario.setText("Usuário: " + GoogleSignIn.getLastSignedInAccount(this).getGivenName());
+
+        db.collection("usuarios").document(email.substring(0, email.indexOf("@")))
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                usuario.setText("Usuário: " + documentSnapshot.get("nome").toString().split(" ")[0]);
+            }
+        });
 
         ImageView imagem = (ImageView) findViewById(R.id.imgEsperando);
         imagem.setImageResource(extras.getInt("img"));

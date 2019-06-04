@@ -53,7 +53,7 @@ public class CadastroActivity extends AppCompatActivity {
         _resmed = findViewById(R.id.resmed);
         _telefone = findViewById(R.id.telefone);
 
-        if (!getIntent().getExtras().isEmpty() && getIntent().getExtras() != null) {
+        if (getIntent().getExtras() != null) {
             _nome.setText(getIntent().getStringExtra("nome"));
             _cpf.setText(getIntent().getStringExtra("cpf"));
             _endereco.setText(getIntent().getStringExtra("endereco"));
