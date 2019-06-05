@@ -1,10 +1,11 @@
 package com.eitor.tcc.appuros;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,7 +15,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,11 +27,17 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
     final int CODIGO_LOGIN = 666;
+  AlertDialog carregando;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().setElevation(0);
+
+      carregando = new AlertDialog.Builder(this)
+        .setTitle("Aguarde")
+        .setMessage("Carregando...")
+        .show();
 
         FirebaseApp.initializeApp(this);
 
@@ -49,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
+                      carregando.dismiss();
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             startActivity(new Intent(LoginActivity.this, ChamadasActivity.class));
@@ -69,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
 
         if (GoogleSignIn.getLastSignedInAccount(this) == null) {
+          carregando.dismiss();
             Button login = findViewById(R.id.sign_in);
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
