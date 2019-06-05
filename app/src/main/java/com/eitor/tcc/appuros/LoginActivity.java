@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
     final int CODIGO_LOGIN = 666;
-  AlertDialog carregando;
+    AlertDialog carregando;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
