@@ -4,14 +4,18 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -166,6 +170,36 @@ public class ChamadasActivity extends AppCompatActivity implements OnMapReadyCal
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mdica:
+                Toast.makeText(this, "Para alterar acessar as opções de seu cadastro, clique no ícone de três pontinhos ao lado.", Toast.LENGTH_LONG)
+                        .show();
+                break;
+            case R.id.msobre:
+                new AlertDialog.Builder(this)
+                        .setMessage("Appuros\nCriado por Eitor Paiva e Mariana Dias.")
+                        .setTitle("Sobre:")
+                        .show();
+                break;
+            case R.id.mconfig:
+                Intent i = new Intent(ChamadasActivity.this, ConfigActivity.class);
+                startActivity(i);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

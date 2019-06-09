@@ -1,10 +1,12 @@
 package com.eitor.tcc.appuros;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -36,8 +38,35 @@ public class MainActivity extends AppCompatActivity {
         btnInicial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(i);
+                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                                PackageManager.PERMISSION_GRANTED) {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setMessage("Para um melhor funcionamento do aplicativo, utilizamos a sua localização " +
+                                    "para efetuar o atendimento. Se você não permitir que o Appuros tenha acesso a localização, " +
+                                    "se tornará impossível realizar o atendimento e usufruir dos benefícios que o aplicativo proporciona.\n\n" +
+                                    "Deseja abrir novamente o alerta de permissão?")
+                            .setTitle("Permissão")
+                            .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ActivityCompat.requestPermissions(MainActivity.this, new String[]
+                                            {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+                                }
+                            })
+                            .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                                    startActivity(i);
+                                }
+                            })
+                            .show();
+                } else {
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(i);
+                }
             }
         });
     }
