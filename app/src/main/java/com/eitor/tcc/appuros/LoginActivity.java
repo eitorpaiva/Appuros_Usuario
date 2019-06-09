@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
     final int CODIGO_LOGIN = 666;
+    private static final int REQUEST_CODE = 101;
     AlertDialog carregando;
 
     @Override
@@ -34,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().setElevation(0);
 
-      carregando = new AlertDialog.Builder(this)
+        carregando = new AlertDialog.Builder(this)
         .setTitle("Aguarde")
         .setMessage("Carregando...")
         .show();
@@ -69,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
     }
 
     @Override
