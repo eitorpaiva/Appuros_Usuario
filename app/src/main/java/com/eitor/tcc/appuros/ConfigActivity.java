@@ -1,9 +1,11 @@
 package com.eitor.tcc.appuros;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -67,6 +69,7 @@ public class ConfigActivity extends AppCompatActivity {
         Button btnEditar = findViewById(R.id.btnEditarConfig);
         Button btnLogout = findViewById(R.id.btnLogoutConfig);
         Button btnApagar = findViewById(R.id.btnApagarConfig);
+        Button btnVoltar = findViewById(R.id.btnVoltarConfig);
 
         btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,10 +97,24 @@ public class ConfigActivity extends AppCompatActivity {
         btnApagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.collection("usuarios")
-                        .document(email.substring(0, email.indexOf("@")))
-                        .delete();
-                fazerLogout();
+                new AlertDialog.Builder(ConfigActivity.this)
+                        .setMessage("Deseja realmente apagar o seu cadastro?")
+                        .setTitle("Apagar Cadastro")
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                db.collection("usuarios")
+                                        .document(email.substring(0, email.indexOf("@")))
+                                        .delete();
+                                fazerLogout();
+                            }
+                        })
+                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .show();
             }
         });
 
@@ -107,7 +124,17 @@ public class ConfigActivity extends AppCompatActivity {
                 fazerLogout();
             }
         });
+
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ConfigActivity.this, ChamadasActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
+
 
     private void fazerLogout() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
