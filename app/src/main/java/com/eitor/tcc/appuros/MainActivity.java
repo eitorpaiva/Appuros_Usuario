@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                                 PackageManager.PERMISSION_GRANTED) {
                     new AlertDialog.Builder(MainActivity.this)
                             .setMessage("Para um melhor funcionamento do aplicativo, utilizamos a sua localização " +
-                                    "para efetuar o atendimento. Se você não permitir que o Appuros tenha acesso a localização, " +
+                                    "para efetuar o atendimento. Se você não permitir que o Appuros tenha acesso à localização, " +
                                     "se tornará impossível realizar o atendimento e usufruir dos benefícios que o aplicativo proporciona.\n\n" +
                                     "Deseja abrir novamente o alerta de permissão?")
                             .setTitle("Permissão")

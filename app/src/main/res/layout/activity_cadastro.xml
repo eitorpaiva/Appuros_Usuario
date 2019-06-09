@@ -45,7 +45,7 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/cpf"
+                android:id="@+id/cpfConfig"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="CPF"
@@ -54,7 +54,7 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/endereco"
+                android:id="@+id/enderecoConfig"
                 android:layout_marginVertical="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
