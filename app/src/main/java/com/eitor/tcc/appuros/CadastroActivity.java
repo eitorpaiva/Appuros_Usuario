@@ -104,7 +104,7 @@ public class CadastroActivity extends AppCompatActivity {
                     else
                         Log.i("falha", "fodeu");
 
-                    startActivity(new Intent(CadastroActivity.this, ChamadasActivity.class));
+                    startActivity(new Intent(CadastroActivity.this, ConfigActivity.class));
                     CadastroActivity.this.finish();
 
                 }if (!(CNP.isValidCPF(cpf))){
