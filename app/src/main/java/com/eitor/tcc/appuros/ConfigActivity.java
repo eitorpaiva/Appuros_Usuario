@@ -88,7 +88,14 @@ public class ConfigActivity extends AppCompatActivity {
                         i.putExtra("contatoEmergencia", documentSnapshot.get("contatoEmergencia").toString());
                         i.putExtra("restricoesMedicas", documentSnapshot.get("restricoesMedicas").toString());
                         i.putExtra("telefone", documentSnapshot.get("telefone").toString());
-                        startActivity(i);
+                        if (!documentSnapshot.get("nome").toString().endsWith("(em atendimento)"))
+                            startActivity(i);
+                        else
+                            new AlertDialog.Builder(ConfigActivity.this)
+                                    .setTitle("Acesso negado!")
+                                    .setMessage("Não é possível alterar seu cadastro enquanto estiver em atendimento!")
+                                    .setPositiveButton("OK", null)
+                                    .show();
                     }
                 });
             }
