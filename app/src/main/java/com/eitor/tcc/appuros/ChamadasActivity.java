@@ -7,7 +7,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -185,14 +184,12 @@ public class ChamadasActivity extends AppCompatActivity implements OnMapReadyCal
                         .show();
                 break;
             case R.id.msobre:
-                new AlertDialog.Builder(this)
-                        .setMessage("Appuros\nCriado por Eitor Paiva e Mariana Dias.")
-                        .setTitle("Sobre:")
-                        .show();
+                Intent i = new Intent(ChamadasActivity.this, SobreActivity.class);
+                startActivity(i);
                 break;
             case R.id.mconfig:
-                Intent i = new Intent(ChamadasActivity.this, ConfigActivity.class);
-                startActivity(i);
+                Intent j = new Intent(ChamadasActivity.this, ConfigActivity.class);
+                startActivity(j);
                 break;
         }
         return super.onOptionsItemSelected(item);
