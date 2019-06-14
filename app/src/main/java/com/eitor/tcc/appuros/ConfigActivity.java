@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -69,7 +70,7 @@ public class ConfigActivity extends AppCompatActivity {
         Button btnEditar = findViewById(R.id.btnEditarConfig);
         Button btnLogout = findViewById(R.id.btnLogoutConfig);
         Button btnApagar = findViewById(R.id.btnApagarConfig);
-        Button btnVoltar = findViewById(R.id.btnVoltarConfig);
+        ImageView btnVoltar = findViewById(R.id.btnVoltarConfig);
 
         btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +129,22 @@ public class ConfigActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fazerLogout();
+                new AlertDialog.Builder(ConfigActivity.this)
+                        .setMessage("Deseja realmente sair?")
+                        .setTitle("Fazer Logout")
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                fazerLogout();
+                            }
+                        })
+                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(ConfigActivity.this, "Obrigado por ficar!", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
             }
         });
 

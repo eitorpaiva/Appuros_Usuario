@@ -14,14 +14,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></View>
 
-    <Button
+    <ImageView
         android:id="@+id/btnVoltarConfig"
-        android:layout_width="104dp"
+        android:layout_width="50dp"
         android:layout_height="35dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/mybutton"
-        android:text="Voltar"
+        android:src="@drawable/ic_arrow_back_24dp"
         android:textAllCaps="false"
         android:textColor="#fff"
         android:textSize="12sp"
@@ -63,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:text="Nome"
+            android:textColor="#000000"
             android:textSize="18sp" />
 
         <TextView
@@ -71,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:text="CPF"
+            android:textColor="#000000"
             android:textSize="18sp" />
 
         <TextView
@@ -79,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:text="Endereço"
+            android:textColor="#000000"
             android:textSize="18sp" />
 
         <TextView
@@ -87,6 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:text="Telefone"
+            android:textColor="#000000"
             android:textSize="18sp" />
 
         <TextView
@@ -95,6 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:text="Telefone de Emergência"
+            android:textColor="#000000"
             android:textSize="18sp" />
 
         <TextView
@@ -103,6 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:text="Restrição Médica"
+            android:textColor="#000000"
             android:textSize="18sp" />
 
         <TextView
@@ -110,6 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tipo Sanguíneo"
+            android:textColor="#000000"
             android:textSize="18sp" />
 
     </LinearLayout>
