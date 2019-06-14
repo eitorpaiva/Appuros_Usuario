@@ -2,6 +2,8 @@ package com.eitor.tcc.appuros;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -52,10 +54,19 @@ public class ConfigActivity extends AppCompatActivity {
         db.collection("usuarios").document(email.substring(0, email.indexOf("@"))).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (!(fotoURL == null)) {
+
+                ConnectivityManager cm = (ConnectivityManager) ConfigActivity.this.getSystemService(CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null &&
+                        activeNetwork.isConnectedOrConnecting();
+
+                if (isConnected && fotoURL != null) {
                     new DownloadImageTask(foto, ConfigActivity.this).execute(fotoURL.toString());
+                    foto.setImageURI(fotoURL);
+                } else {
+                    foto.setImageResource(R.drawable.ic_autorenew_black_24dp);
                 }
-                foto.setImageURI(fotoURL);
+
                 nome.setText("Nome: " + documentSnapshot.get("nome").toString());
                 cpf.setText("CPF: " + documentSnapshot.get("cpf").toString());
                 endereco.setText("Endereço: " + documentSnapshot.get("endereco").toString());
