@@ -101,7 +101,7 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
                         enviarServico(servico);
                         fetchLastLocation();
                         Map<String, Object> map = new HashMap<>();
-                        map.put("gravidade", 1);
+                        map.put("gravidade", "Leve");
                         db.collection("usuarios")
                                 .document(email.substring(0, email.indexOf("@")))
                                 .update(map)
@@ -155,7 +155,7 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
                         enviarServico(servico);
                         fetchLastLocation();
                         Map<String, Object> map = new HashMap<>();
-                        map.put("gravidade", 2);
+                        map.put("gravidade", "Moderada");
                         db.collection("usuarios")
                                 .document(email.substring(0, email.indexOf("@")))
                                 .update(map)
@@ -208,7 +208,7 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
                         enviarServico(servico);
                         fetchLastLocation();
                         Map<String, Object> map = new HashMap<>();
-                        map.put("gravidade", 3);
+                        map.put("gravidade", "Grave");
                         db.collection("usuarios")
                                 .document(email.substring(0, email.indexOf("@")))
                                 .update(map)
@@ -311,7 +311,7 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
             enviarServico(servico);
             fetchLastLocation();
             Map<String, Object> map = new HashMap<>();
-            map.put("gravidade", 1);
+            map.put("gravidade", "Leve");
             db.collection("usuarios")
                     .document(email.substring(0, email.indexOf("@")))
                     .update(map)
