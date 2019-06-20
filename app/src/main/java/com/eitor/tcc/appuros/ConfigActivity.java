@@ -121,57 +121,75 @@ public class ConfigActivity extends AppCompatActivity {
         btnApagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(ConfigActivity.this)
-                        .setMessage("Deseja realmente apagar o seu cadastro?")
-                        .setTitle("Apagar Cadastro")
-                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                db.collection("usuarios")
-                                        .document(email.substring(0, email.indexOf("@")))
-                                        .delete();
-                                fazerLogout();
-                            }
-                        })
-                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .show();
+                DocumentReference editarDocRef = db
+                        .collection("usuarios")
+                        .document(email.substring(0, email.indexOf("@")));
+
+                editarDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (!documentSnapshot.get("nome").toString().endsWith("(em atendimento)")) {
+
+                            new AlertDialog.Builder(ConfigActivity.this)
+                                    .setMessage("Deseja realmente apagar o seu cadastro?")
+                                    .setTitle("Apagar Cadastro")
+                                    .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            db.collection("usuarios")
+                                                    .document(email.substring(0, email.indexOf("@")))
+                                                    .delete();
+                                            fazerLogout();
+                                        }
+                                    })
+                                    .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    })
+                                    .show();
+                        } else {
+                            new AlertDialog.Builder(ConfigActivity.this)
+                                    .setTitle("Acesso negado!")
+                                    .setMessage("Não é possível apagar seu cadastro enquanto estiver em atendimento!")
+                                    .setPositiveButton("OK", null)
+                                    .show();
+                        }
+                    }
+                });
+
+                btnLogout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(ConfigActivity.this)
+                                .setMessage("Deseja realmente sair?")
+                                .setTitle("Fazer Logout")
+                                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        fazerLogout();
+                                    }
+                                })
+                                .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(ConfigActivity.this, "Obrigado por ficar!", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .show();
+                    }
+                });
+
+                btnVoltar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(ConfigActivity.this, ChamadasActivity.class);
+                        startActivity(i);
+                    }
+                });
+
             }
         });
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(ConfigActivity.this)
-                        .setMessage("Deseja realmente sair?")
-                        .setTitle("Fazer Logout")
-                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                fazerLogout();
-                            }
-                        })
-                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(ConfigActivity.this, "Obrigado por ficar!", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .show();
-            }
-        });
-
-        btnVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ConfigActivity.this, ChamadasActivity.class);
-                startActivity(i);
-            }
-        });
-
     }
 
 

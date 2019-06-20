@@ -2,6 +2,7 @@ package com.eitor.tcc.appuros;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,15 +23,16 @@ public class ChamadasActivity extends AppCompatActivity {
     TextView frufru;
 
     FirebaseFirestore db;
-
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
+
         db = FirebaseFirestore.getInstance();
 
-        final String email = GoogleSignIn.getLastSignedInAccount(this).getEmail();
+        email = GoogleSignIn.getLastSignedInAccount(this).getEmail();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().setElevation(0);
@@ -79,7 +81,43 @@ public class ChamadasActivity extends AppCompatActivity {
         i.putExtra("btn",R.drawable.my_button_samu);
         i.putExtra("img",R.drawable.ic_samu_icon);
         i.putExtra("servico", "samu");
-        startActivity(i);
+
+        DocumentReference editarDocRef = db
+                .collection("usuarios")
+                .document(email.substring(0, email.indexOf("@")));
+
+        editarDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.get("servico") == null || documentSnapshot.get("servico").toString().equals("samu")) {
+                    if (!documentSnapshot.get("nome").toString().endsWith("(em atendimento)")) {
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(ChamadasActivity.this, EsperandoActivity.class);
+                        i.putExtra("cor", "#FF6F00");
+                        i.putExtra("btn", R.drawable.my_button_samu);
+                        i.putExtra("img", R.drawable.ic_samu_icon);
+                        i.putExtra("servico", "samu");
+                        startActivity(i);
+                    }
+                } else if (!documentSnapshot.get("servico").toString().equals("samu")) {
+                    if (documentSnapshot.get("nome").toString().endsWith("(em atendimento)")) {
+                        new AlertDialog.Builder(ChamadasActivity.this)
+                                .setTitle("Acesso negado!")
+                                .setMessage("Não é possível solicitar outro atendimento enquanto estiver em atendimento!")
+                                .setPositiveButton("OK", null)
+                                .show();
+                    } else {
+                        new AlertDialog.Builder(ChamadasActivity.this)
+                                .setTitle("Acesso negado!")
+                                .setMessage("Não é possível solicitar outro atendimento se já tiver solicitado algum!\nCancele a chamada e tente novamente!")
+                                .setPositiveButton("OK", null)
+                                .show();
+                    }
+                }
+            }
+        });
+
     }
 
     public void abrirBomb(View view) {
@@ -88,7 +126,42 @@ public class ChamadasActivity extends AppCompatActivity {
         i.putExtra("btn",R.drawable.my_button_bomb);
         i.putExtra("img",R.drawable.ic_bombeiros_icon);
         i.putExtra("servico", "bomb");
-        startActivity(i);
+
+        DocumentReference editarDocRef = db
+                .collection("usuarios")
+                .document(email.substring(0, email.indexOf("@")));
+
+        editarDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.get("servico") == null || documentSnapshot.get("servico").toString().equals("bomb")) {
+                    if (!documentSnapshot.get("nome").toString().endsWith("(em atendimento)")) {
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(ChamadasActivity.this, EsperandoActivity.class);
+                        i.putExtra("cor", "#C62828");
+                        i.putExtra("btn", R.drawable.my_button_bomb);
+                        i.putExtra("img", R.drawable.ic_bombeiros_icon);
+                        i.putExtra("servico", "bomb");
+                        startActivity(i);
+                    }
+                } else if (!documentSnapshot.get("servico").toString().equals("bomb")) {
+                    if (documentSnapshot.get("nome").toString().endsWith("(em atendimento)")) {
+                        new AlertDialog.Builder(ChamadasActivity.this)
+                                .setTitle("Acesso negado!")
+                                .setMessage("Não é possível solicitar outro atendimento enquanto estiver em atendimento!")
+                                .setPositiveButton("OK", null)
+                                .show();
+                    } else {
+                        new AlertDialog.Builder(ChamadasActivity.this)
+                                .setTitle("Acesso negado!")
+                                .setMessage("Não é possível solicitar outro atendimento se já tiver solicitado algum!\nCancele a chamada e tente novamente!")
+                                .setPositiveButton("OK", null)
+                                .show();
+                    }
+                }
+            }
+        });
     }
 
     public void abrirPM(View view) {
@@ -97,7 +170,43 @@ public class ChamadasActivity extends AppCompatActivity {
         i.putExtra("btn", R.drawable.my_button_pm);
         i.putExtra("img", R.drawable.ic_pm_icon);
         i.putExtra("servico", "pm");
-        startActivity(i);
+
+        DocumentReference editarDocRef = db
+                .collection("usuarios")
+                .document(email.substring(0, email.indexOf("@")));
+
+        editarDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.get("servico") == null || documentSnapshot.get("servico").toString().equals("pm")) {
+                    if (!documentSnapshot.get("nome").toString().endsWith("(em atendimento)")) {
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(ChamadasActivity.this, EsperandoActivity.class);
+                        i.putExtra("cor", "#385eaa");
+                        i.putExtra("btn", R.drawable.my_button_pm);
+                        i.putExtra("img", R.drawable.ic_pm_icon);
+                        i.putExtra("servico", "pm");
+                        startActivity(i);
+                    }
+                } else if (!documentSnapshot.get("servico").toString().equals("pm")) {
+                    if (documentSnapshot.get("nome").toString().endsWith("(em atendimento)")) {
+                        new AlertDialog.Builder(ChamadasActivity.this)
+                                .setTitle("Acesso negado!")
+                                .setMessage("Não é possível solicitar outro atendimento enquanto estiver em atendimento!")
+                                .setPositiveButton("OK", null)
+                                .show();
+                    } else {
+                        new AlertDialog.Builder(ChamadasActivity.this)
+                                .setTitle("Acesso negado!")
+                                .setMessage("Não é possível solicitar outro atendimento se já tiver solicitado algum!\nCancele a chamada e tente novamente!")
+                                .setPositiveButton("OK", null)
+                                .show();
+                    }
+                }
+            }
+        });
+
     }
 
     @Override
