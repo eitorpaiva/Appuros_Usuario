@@ -115,7 +115,7 @@ public class ChamadasActivity extends AppCompatActivity {
                                 "192 - Serviço de Atendimento Médico de Urgência (SAMU)\n" +
                                 "190 - Polícia Militar (PM)\n" +
                                 "191 - Polícia Rodoviária Federal (PRF)\n" +
-                                "197 - Polícia Civil (PC)" +
+                                "197 - Polícia Civil (PC)\n" +
                                 "180 - Delegacia da Mulher", Toast.LENGTH_LONG)
                         .show();
                 break;
