@@ -17,7 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SobreActivity"></activity>
+        <activity
+            android:name=".GravidadeActivity"
+            android:label="@string/title_activity_gravidade"></activity>
+        <activity android:name=".SobreActivity" />
         <activity android:name=".ConfigActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MapsActivityCurrentPlace" />

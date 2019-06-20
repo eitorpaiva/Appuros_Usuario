@@ -5,4 +5,11 @@
     <color name="colorAccent">#000000</color>
     <color name="colorWhite">#FFF</color>
     <color name="colorDarkGrey">#3A3838</color>
+    <color name="colorPM">#385eaa</color>
+    <color name="colorBombeiro">#C62828</color>
+    <color name="colorSAMU">#FF6F00</color>
+    <color name="colorLeve">#2E7D32</color>
+    <color name="colorMedia">#FDD835</color>
+    <color name="colorGrave">#E64A19</color>
+
 </resources>
