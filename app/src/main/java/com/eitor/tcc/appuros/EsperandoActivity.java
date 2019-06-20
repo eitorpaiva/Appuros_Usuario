@@ -50,10 +50,14 @@ public class EsperandoActivity extends AppCompatActivity {
                 status = findViewById(R.id.status);
                 status.setTextColor(Color.parseColor(extras.getString("cor")));
 
-                if (doc.get("nome").toString().endsWith("(em atendimento)")) {
-                    status.setText("Atendente a caminho!");
+                if (doc.get("nome") != null) {
+                    if (doc.get("nome").toString().endsWith("(em atendimento)")) {
+                        status.setText("Atendente a caminho!");
+                    } else {
+                        status.setText("Procurando atendentes...");
+                    }
                 } else {
-                    status.setText("Procurando atendentes...");
+
                 }
 
                 if (!doc.contains("servico")) {
