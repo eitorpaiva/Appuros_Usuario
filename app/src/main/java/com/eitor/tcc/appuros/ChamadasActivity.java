@@ -110,9 +110,13 @@ public class ChamadasActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mdica:
-                Toast.makeText(this, "190 - Polícia Militar\n" +
+                Toast.makeText(this,
                         "193 - Corpo de Bombeiros\n" +
-                        "192 - Serviço de Atendimento Médico de Urgência (SAMU)", Toast.LENGTH_LONG)
+                                "192 - Serviço de Atendimento Médico de Urgência (SAMU)\n" +
+                                "190 - Polícia Militar (PM)\n" +
+                                "191 - Polícia Rodoviária Federal (PRF)\n" +
+                                "197 - Polícia Civil (PC)" +
+                                "180 - Delegacia da Mulher", Toast.LENGTH_LONG)
                         .show();
                 break;
             case R.id.msobre:

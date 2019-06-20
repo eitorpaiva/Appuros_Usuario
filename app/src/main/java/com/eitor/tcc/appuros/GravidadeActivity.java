@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -43,9 +42,11 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
     FirebaseFirestore db;
     String email;
     ImageView img;
+    BottomNavigationView navView;
     TextView exemplos;
     View linha;
     View linha2;
+    int leve, leveSelec, med, medSelec, grave, graveSelec;
     String title;
     SpannableString s;
     private TextView mTextMessage;
@@ -56,21 +57,30 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_leve:
+                case R.id.nav_leve:
                     mTextMessage.setText("Ocorrência Leve");
 
                     if (servico.equals("samu")) {
-                        img.setImageResource(R.drawable.ic_samu_leve);
+                        desselecionarTudo();
+                        trocarParaSAMU();
+                        selecionar(R.id.nav_leve, leveSelec);
+                        img.setImageResource(leve);
                         exemplos.setText("Exemplos: Mal-estar, casos de um único paciente.");
                     }
 
                     if (servico.equals("bomb")) {
-                        img.setImageResource(R.drawable.ic_bomb_leve);
+                        desselecionarTudo();
+                        trocarParaBombeiros();
+                        selecionar(R.id.nav_leve, leveSelec);
+                        img.setImageResource(leve);
                         exemplos.setText("Exemplos: Incêndios domésticos.");
                     }
 
                     if (servico.equals("pm")) {
-                        img.setImageResource(R.drawable.ic_pm_leve);
+                        desselecionarTudo();
+                        trocarParaPM();
+                        selecionar(R.id.nav_leve, leveSelec);
+                        img.setImageResource(leve);
                         exemplos.setText("Exemplos: Brigas, pequenos furtos.");
                     }
 
@@ -111,21 +121,30 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
                                 });
                     });
                     return true;
-                case R.id.navigation_mediana:
+                case R.id.nav_mediana:
                     mTextMessage.setText("Ocorrência Moderada");
 
                     if (servico.equals("samu")) {
-                        img.setImageResource(R.drawable.ic_samu_mediana);
+                        desselecionarTudo();
+                        trocarParaSAMU();
+                        selecionar(R.id.nav_mediana, medSelec);
+                        img.setImageResource(med);
                         exemplos.setText("Exemplos: Acidente de trânsito simples, ocorrências sem grandes ferimentos.");
                     }
 
                     if (servico.equals("bomb")) {
-                        img.setImageResource(R.drawable.ic_bomb_mediana);
+                        desselecionarTudo();
+                        trocarParaBombeiros();
+                        selecionar(R.id.nav_mediana, medSelec);
+                        img.setImageResource(med);
                         exemplos.setText("Exemplos: Incêndios industriais ou comerciais.");
                     }
 
                     if (servico.equals("pm")) {
-                        img.setImageResource(R.drawable.ic_pm_mediana);
+                        desselecionarTudo();
+                        trocarParaPM();
+                        selecionar(R.id.nav_mediana, medSelec);
+                        img.setImageResource(med);
                         exemplos.setText("Exemplos: Briga generalizada, assalto de médio porte.");
                     }
 
@@ -165,21 +184,30 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
                                 });
                     });
                     return true;
-                case R.id.navigation_grave:
+                case R.id.nav_grave:
                     mTextMessage.setText("Ocorrência Grave");
 
                     if (servico.equals("samu")) {
-                        img.setImageResource(R.drawable.ic_samu_grave);
+                        desselecionarTudo();
+                        trocarParaSAMU();
+                        selecionar(R.id.nav_grave, graveSelec);
+                        img.setImageResource(grave);
                         exemplos.setText("Exemplos: Grandes acidentes envolvendo várias pessoas, ocorrências com ferimentos graves.");
                     }
 
                     if (servico.equals("bomb")) {
-                        img.setImageResource(R.drawable.ic_bomb_grave);
+                        desselecionarTudo();
+                        trocarParaBombeiros();
+                        selecionar(R.id.nav_grave, graveSelec);
+                        img.setImageResource(grave);
                         exemplos.setText("Exemplos: Incêndios ambiental.");
                     }
 
                     if (servico.equals("pm")) {
-                        img.setImageResource(R.drawable.ic_pm_grave);
+                        desselecionarTudo();
+                        trocarParaPM();
+                        selecionar(R.id.nav_grave, graveSelec);
+                        img.setImageResource(grave);
                         exemplos.setText("Exemplos: Sequestro, assalto com refém, troca de tiros.");
 
                     }
@@ -227,7 +255,8 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gravidade);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
+
 
         img = findViewById(R.id.img_gravidade);
         exemplos = findViewById(R.id.exemplos);
@@ -241,26 +270,33 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
 
         mTextMessage.setTextColor(Color.parseColor(GravidadeActivity.this.getIntent().getStringExtra("cor")));
 
+        navView.setItemIconTintList(null);
+        selecionar(R.id.nav_leve, R.drawable.ic_samu_leve_selec);
+
+        img = findViewById(R.id.img_gravidade);
 
         if (servico.equals("samu")) {
-            navView.setItemIconTintList(null);
-            navView.getMenu().getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_samu_leve));
-            navView.getMenu().getItem(1).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_samu_mediana));
-            navView.getMenu().getItem(2).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_samu_grave));
+            desselecionarTudo();
+            trocarParaSAMU();
+            selecionar(R.id.nav_leve, leveSelec);
+            img.setImageResource(leve);
+            exemplos.setText("Exemplos: Mal-estar, casos de um único paciente.");
         }
 
         if (servico.equals("bomb")) {
-            navView.setItemIconTintList(null);
-            navView.getMenu().getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_bomb_leve));
-            navView.getMenu().getItem(1).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_bomb_mediana));
-            navView.getMenu().getItem(2).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_bomb_grave));
+            desselecionarTudo();
+            trocarParaBombeiros();
+            selecionar(R.id.nav_leve, leveSelec);
+            img.setImageResource(leve);
+            exemplos.setText("Exemplos: Incêndios domésticos.");
         }
 
         if (servico.equals("pm")) {
-            navView.setItemIconTintList(null);
-            navView.getMenu().getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_pm_leve));
-            navView.getMenu().getItem(1).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_pm_mediana));
-            navView.getMenu().getItem(2).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_pm_grave));
+            desselecionarTudo();
+            trocarParaPM();
+            selecionar(R.id.nav_leve, leveSelec);
+            img.setImageResource(leve);
+            exemplos.setText("Exemplos: Brigas, pequenos furtos.");
         }
 
     }
@@ -272,18 +308,31 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
         mTextMessage.setTextColor(Color.parseColor(GravidadeActivity.this.getIntent().getStringExtra("cor")));
         exemplos.setTextColor(Color.parseColor(GravidadeActivity.this.getIntent().getStringExtra("cor")));
 
+        navView.setItemIconTintList(null);
+        selecionar(R.id.nav_leve, R.drawable.ic_samu_leve_selec);
+        img = findViewById(R.id.img_gravidade);
+
         if (servico.equals("samu")) {
-            img.setImageResource(R.drawable.ic_samu_leve);
+            desselecionarTudo();
+            trocarParaSAMU();
+            selecionar(R.id.nav_leve, leveSelec);
+            img.setImageResource(leve);
             exemplos.setText("Exemplos: Mal-estar, casos de um único paciente.");
         }
 
         if (servico.equals("bomb")) {
-            img.setImageResource(R.drawable.ic_bomb_leve);
+            desselecionarTudo();
+            trocarParaBombeiros();
+            selecionar(R.id.nav_leve, leveSelec);
+            img.setImageResource(leve);
             exemplos.setText("Exemplos: Incêndios domésticos.");
         }
 
         if (servico.equals("pm")) {
-            img.setImageResource(R.drawable.ic_pm_leve);
+            desselecionarTudo();
+            trocarParaPM();
+            selecionar(R.id.nav_leve, leveSelec);
+            img.setImageResource(leve);
             exemplos.setText("Exemplos: Brigas, pequenos furtos.");
         }
 
@@ -376,5 +425,48 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+    }
+
+    void desselecionarTudo() {
+        navView.getMenu().findItem(R.id.nav_leve).setIcon(leve);
+        navView.getMenu().findItem(R.id.nav_mediana).setIcon(med);
+        navView.getMenu().findItem(R.id.nav_grave).setIcon(grave);
+    }
+
+    void selecionar(int id, int iconSelecionado) {
+        navView.getMenu().findItem(id).setIcon(iconSelecionado);
+    }
+
+    void trocarParaPM() {
+        leve = R.drawable.ic_pm_leve;
+        leveSelec = R.drawable.ic_pm_leve_selec;
+        med = R.drawable.ic_pm_mediana;
+        medSelec = R.drawable.ic_pm_mediana_selec;
+        grave = R.drawable.ic_pm_grave;
+        graveSelec = R.drawable.ic_pm_grave_selec;
+
+        img.setImageResource(leve);
+    }
+
+    void trocarParaSAMU() {
+        leve = R.drawable.ic_samu_leve;
+        leveSelec = R.drawable.ic_samu_leve_selec;
+        med = R.drawable.ic_samu_mediana;
+        medSelec = R.drawable.ic_samu_mediana_selec;
+        grave = R.drawable.ic_samu_grave;
+        graveSelec = R.drawable.ic_samu_grave_selec;
+
+        img.setImageResource(leve);
+    }
+
+    void trocarParaBombeiros() {
+        leve = R.drawable.ic_bomb_leve;
+        leveSelec = R.drawable.ic_bomb_leve_selec;
+        med = R.drawable.ic_bomb_mediana;
+        medSelec = R.drawable.ic_bomb_mediana_selec;
+        grave = R.drawable.ic_bomb_grave;
+        graveSelec = R.drawable.ic_bomb_grave_selec;
+
+        img.setImageResource(leve);
     }
 }
