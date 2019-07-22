@@ -200,7 +200,7 @@ public class GravidadeActivity extends AppCompatActivity implements OnMapReadyCa
                         trocarParaBombeiros();
                         selecionar(R.id.nav_grave, graveSelec);
                         img.setImageResource(grave);
-                        exemplos.setText("Exemplos: Incêndios ambiental.");
+                        exemplos.setText("Exemplos: Incêndios ambientais.");
                     }
 
                     if (servico.equals("pm")) {
